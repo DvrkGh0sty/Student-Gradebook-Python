@@ -6,15 +6,18 @@ def main():
         print('4. Exit')
         choice = input('What would you like to do: ')
         if choice == '1':
-            as
+            todo = input('Enter task to be added: ')
+            add_tasks(todo)
+        elif choice == '2':
+            view_tasks()
+        elif choice == '3':
+            delete_tasks()
+        else:
+            break
 
 def add_tasks(task):
     tasks.append(task)
     print(f'{task} has been added.')
-    try:
-        add_tasks(input('Enter task: '))
-    except TypeError:
-        print('You have not entered a valid task.')
 def view_tasks():
     if len(tasks) == 0:
         print('There are no tasks to view.')
@@ -44,9 +47,6 @@ def delete_tasks():
         print()
 def exit_program():
     decision = input('Are you sure you want to quit y/n: ').lower()
-    if decision == 'y':
-        break
-    else:
-        print('You have not entered a valid command')
+    print('You have not entered a valid command')
 tasks = []
 main()
