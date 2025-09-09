@@ -7,7 +7,9 @@ def main():
         choice = input('What would you like to do: ')
         if choice == '1':
             todo = input('Enter task to be added: ')
-            add_tasks(todo)
+            priority = input('Enter priority (high and low): ')
+            status = input('Complete or incomplete: ')
+            add_tasks(todo, priority, status)
         elif choice == '2':
             view_tasks()
         elif choice == '3':
@@ -15,35 +17,39 @@ def main():
         else:
             break
 
-def add_tasks(task):
-    tasks.append(task)
-    print(f'{task} has been added.')
-def view_tasks():
+def add_tasks(task, priority, status='incomplete'):
+    tasks.append({'task': task, 'priority': priority, 'status': status})
+    print('Your todo has been added.')
+    while True:
+        priority1 = input('Priority high/low: ')
+        if priority1.lower() == 'higher' or priority.lower() == 'low':
+            break
+        else:
+            print('Invalid information, data must be within high or low.')
+def view_tasks(tasks):
     if len(tasks) == 0:
         print('There are no tasks to view.')
     else:
-        print('These are you tasks: ')
-        i = 1
         for task in tasks:
-            print(str(i) + ". " + task)
-            i += 1
-            print()
+            print(f"Task: {task['task']}, Priority: {task['priority']}")
 def delete_tasks():
     if len(tasks) == 0:
         print('There are no tasks to delete.')
     else:
         print('These are your tasks:')
-        for i, task in enumerate(tasks, 1):
-            print(f"{i}. {task}")
+        i = 1
+        for task in tasks:
+            print(str(i) + ". " + task)
+            i += 1
         try:
-            remove = int(input('Enter the number of the task to delete: ')) - 1
-            if remove < 0 or remove >= len(tasks):
-                print('Invalid task number. Please try again.')
+            deleted = int(input('Enter the number of the task you want to delete: ')) - 1
+            if deleted < 0 or deleted >= len(tasks):
+                print('The number entered is too high, there is no task of this value.')
             else:
-                deleted_task = tasks.pop(remove)
-                print(f'"{deleted_task}" has been deleted.')
+                removed_task = tasks.pop(deleted)
+                print(f'{removed_task} has been deleted')
         except ValueError:
-            print('Please enter a valid number.')
+            print('Make sure the value entered is a number instead of a symbol or letter.')
         print()
 def exit_program():
     decision = input('Are you sure you want to quit y/n: ').lower()
